@@ -10,10 +10,9 @@
 # include <sstream>
 # include <fstream>
 # include <io.h>
-# include <string>
 # include <cmath>
 
-using namespace std;
+using namespace std ;
 
 typedef char Str100[100] ;
 
@@ -113,105 +112,6 @@ class GraduationInfo {
 		int GetNumOfGraduations() ;
 
 } ; // GraduationInfo
-
-// ===============================    class Two_Three_TreeInfo    =================================
-
-
-class Two_Three_TreeInfo {
-    private :
-
-	public :
-
-		vector<GraduationInfo> data1 ;
-		vector<GraduationInfo> data2 ;
-		bool istwo;
-		Two_Three_TreeInfo *left ;
-		Two_Three_TreeInfo *right ;
-		Two_Three_TreeInfo *mid ;
-		Two_Three_TreeInfo *parent;
-
-		/*
-		 * the constructor of AVL_TreeInfo
-		 */
-
-		Two_Three_TreeInfo( GraduationInfo temp ) ;
-
-		/*
-		 * to print all the informations in graduation
-		 */
-
-		void PrintInformation() ;
-
-} ; // Two_Three_TreeInfo
-
-typedef Two_Three_TreeInfo *Two_Three_TreeInfoPtr ;
-
-// ===============================    class Two_Three_Tree    =================================
-
-class Two_Three_Tree {
-
-	private :
-
-		Two_Three_TreeInfoPtr root ;
-		int numOfNodes ;
-
-	public :
-
-		/*
-		 * the constructor of Two_Three_Tree
-		 */
-
-		Two_Three_Tree() ;
-
-		/*
-		 * initialize tree pointer
-		 */
-
-		void InitTheTree() ;
-
-		/*
-		 * clear all the nodes and return memory
-		 */
-
-		void DeleteAll( Two_Three_TreeInfoPtr temp ) ;
-
-		/*
-		 * to count the treeHeight
-		 */
-
-		int CountTreeHeight( Two_Three_TreeInfoPtr temp ) ;
-
-		/*
-		 * to count the balance factor
-		 */
-
-		Two_Three_TreeInfoPtr Insert( AVL_TreeInfoPtr walk, GraduationInfo temp ) ;
-
-		/*
-		 * to create a AVL tree
-		 */
-
-		void CreateTree( Str100 filePath ) ;
-
-		/*
-		 * to print the height of the tree
-		 */
-
-		void PrintTreeHeight() ;
-
-		/*
-		 * to print the num of nodes
-		 */
-
-		void PrintNumOfNodes() ;
-
-		/*
-		 * to get a pointer point to root
-		 */
-
-		Two_Three_TreeInfoPtr GetRoot() ;
-
-} ; // Two_Three_Tree
 
 // ===============================    class AVL_TreeInfo    =================================
 
@@ -352,8 +252,7 @@ int main() {
 	Str100 filePath = {0} ;
 	Str100 fileNumberChar = {0} ;
 	Str100 command = {0} ;
-	Two_Three_Tree tree1;
-	AVL_Tree tree2 ;
+	AVL_Tree tree ;
 	bool createdTree = false ;
 
 	cout << "##########################################" << endl ;
@@ -396,61 +295,7 @@ int main() {
 		// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓		mission 1		↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 		if ( strcmp( command, "1" ) == 0 ) {
-		  cout << "You choosed the first mode, if you want to exit, please input \"..\"" << endl ;
-			cout << endl ;
-			cout << "Please input the file number(e.g. 201, 202...) : " ;
 
-			cin >> fileNumberChar ;
-
-			if ( strcmp( fileNumberChar, ".." ) == 0 )
-				;
-
-			else {
-
-				strcpy( filePath, "input" ) ;
-				strcat( filePath, fileNumberChar ) ;
-				strcat( filePath, ".txt" ) ;
-
-				while ( access( filePath, 0 ) < 0 ) {
-
-					cout << endl << "This file does not exist, please try again." << endl ;
-					cout << "if you want to exit, please input \"..\"" << endl ;
-					cout  << endl << "Please input the file number(e.g. 201, 202...) : " ;
-
-					strcpy( filePath, "input" ) ;
-					cin >> fileNumberChar ;
-
-					if ( strcmp( fileNumberChar, ".." ) == 0 )
-						break ;
-
-					strcat( filePath, fileNumberChar ) ;
-					strcat( filePath, ".txt" ) ;
-
-				} // while
-
-				if ( strcmp( fileNumberChar, ".." ) == 0 )
-					;
-
-				else {
-
-					if ( createdTree ) {
-
-						tree1.DeleteAll( tree.GetRoot() ) ;
-						tree1.InitTheTree() ;
-
-					} // if
-
-					tree1.CreateTree( filePath ) ;
-					tree1.PrintTreeHeight() ;
-					cout << endl ;
-					tree1.PrintNumOfNodes() ;
-					tree1.GetRoot()->PrintInformation() ;
-
-					createdTree = true ;
-
-				} // else
-
-			} // else
 		} // if
 
 		// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓		mission 2		↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -496,16 +341,16 @@ int main() {
 
 					if ( createdTree ) {
 
-						tree2.DeleteAll( tree2.GetRoot() ) ;
-						tree2.InitTheTree() ;
+						tree.DeleteAll( tree.GetRoot() ) ;
+						tree.InitTheTree() ;
 
 					} // if
 
-					tree2.CreateTree( filePath ) ;
-					tree2.PrintTreeHeight() ;
+					tree.CreateTree( filePath ) ;
+					tree.PrintTreeHeight() ;
 					cout << endl ;
-					tree2.PrintNumOfNodes() ;
-					tree2.GetRoot()->PrintInformation() ;
+					tree.PrintNumOfNodes() ;
+					tree.GetRoot()->PrintInformation() ;
 
 					createdTree = true ;
 
@@ -687,238 +532,6 @@ int GraduationInfo::GetNumOfGraduations() {
 	return numOfGraduations ;
 
 } // GraduationInfo::GetNumOfGraduation()
-
-// ===============================    the implement of method in Two_Three_TreeInfo    =================================
-
-/*
- * the constructor of Two_Three_TreeInfo
- */
-
-Two_Three_TreeInfo::Two_Three_TreeInfo( GraduationInfo temp ) {
-    data1.push_back( temp ) ;
-	left = NULL ;
-	right = NULL ;
-	mid = NULL;
-	parent = NULL;
-	istwo = false;
-}//Two_Three_TreeInfo::Two_Three_TreeInfo
-
-/*
- * to print all the informations in graduation
- */
-
-void Two_Three_TreeInfo::PrintInformation() {
-	if ( istwo){
-      for ( int i = 0 ; i < data1.size() ; i++ ) {
-
-		cout << i + 1 << " : [" << data1[i].GetNumber() << "] " ;
-		cout << data1[i].GetSchoolName() << ",	"
-				 << data1[i].GetMajorName() << ",	"
-				 << data1[i].GetDayOrNight() << ",	"
-				 << data1[i].GetRank() << ",	"
-				 << data1[i].GetNumOfGraduations() << endl ;
-
-	  } // for
-
-      for ( int j = 0 ; j < data2.size() ; j++ ) {
-
-		cout << j + 1 << " : [" << data1[j].GetNumber() << "] " ;
-		cout << data2[j].GetSchoolName() << ",	"
-				 << data2[j].GetMajorName() << ",	"
-				 << data2[j].GetDayOrNight() << ",	"
-				 << data2[j].GetRank() << ",	"
-				 << data2[j].GetNumOfGraduations() << endl ;
-
-	  } // for
-
-	}
-	else{
-      for ( int i = 0 ; i < data1.size() ; i++ ) {
-
-		cout << i + 1 << " : [" << data1[i].GetNumber() << "] " ;
-		cout << data1[i].GetSchoolName() << ",	"
-				 << data1[i].GetMajorName() << ",	"
-				 << data1[i].GetDayOrNight() << ",	"
-				 << data1[i].GetRank() << ",	"
-				 << data1[i].GetNumOfGraduations() << endl ;
-
-	  } // for
-	}
-
-
-} // Two_Three_TreeInfo::PrintInformation()
-
-
-/*
- * clear all the nodes and return memory
- */
-
-
-
-// ===============================    the implement of method in Two_Three_Tree    =================================
-
-/*
- * the constructor of Two_Three_Tree
- */
-
-Two_Three_Tree::Two_Three_Tree(){
-  root = NULL ;
-  numOfNodes = 0 ;
-} // Two_Three_Tree::Two_Three_Tree()
-
-/*
- * initialize tree pointer
- */
-
-void Two_Three_Tree::InitTheTree() {
-
-	numOfNodes = 0 ;
-	root = NULL ;
-
-} // Two_Three_Tree::InitTheTree()
-
-void Two_Three_Tree::DeleteAll( Two_Three_TreeInfoPtr temp ) {
-
-	if ( temp != NULL ) {
-
-		DeleteAll( temp->left ) ;
-		DeleteAll( temp->mid ) ;
-		DeleteAll( temp->right ) ;
-
-		delete temp ;
-
-		temp = NULL ;
-
-	} // if
-
-} // AVL_Tree::DeleteAll()
-
-/*
- * to count the treeHeight
- */
-
-int Two_Three_Tree::CountTreeHeight( Two_Three_TreeInfoPtr temp ) {
-
-	if ( temp == NULL )
-		return 0 ;
-
-	int left = CountTreeHeight( temp->left ) ;
-	int right = CountTreeHeight( temp->right ) ;
-
-	if ( left > right )
-		return left + 1 ;
-	else
-		return right + 1 ;
-
-} // Two_Three_Tree::CountTreeHeight()
-
-/*
- * insert node to AVL tree
- */
-
-Two_Three_TreeInfoPtr Two_Three_Tree::Insert( Two_Three_TreeInfoPtr walk, GraduationInfo temp ) {
-
-}
-
-/*
- * to create a AVL tree
- */
-
-void Two_Three_Tree::CreateTree( Str100 filePath ) {
-
-	GraduationInfo temp ;
-	Two_Three_TreeInfoPtr it = NULL ;
-
-	int tempNum = 0 ;
-	int number = 1 ;
-
-	string tempString ;
-	tempString.clear() ;
-
-	ifstream input( filePath, ios::in ) ;
-
-	for ( int i = 0 ; i < 3 ; i++ )
-		getline( input, tempString ) ;
-
-	while ( getline( input, tempString, '\t' ) ) {
-		// school code
-
-		temp.SetNumber( number ) ;
-
-		getline( input, tempString, '\t' ) ; // school Name
-		temp.SetSchoolName( tempString ) ;
-
-		getline( input, tempString, '\t' ) ; // major code
-
-		getline( input, tempString, '\t' ) ; // major name
-		temp.SetMajorName( tempString ) ;
-
-		getline( input, tempString, '\t' ) ; // degree
-		temp.SetDayOrNight( tempString ) ;
-
-		getline( input, tempString, '\t' ) ; // rank
-		temp.SetRank( tempString ) ;
-
-		getline( input, tempString, '\t' ) ; // how many students
-
-		getline( input, tempString, '\t' ) ; // how many teachers
-
-		getline( input, tempString, '\t' ) ; // how many graduations in last year
-		tempNum = ChangeStringToInteger( tempString ) ;
-		temp.SetNumOfGraduations( tempNum ) ;
-
-		getline( input, tempString, '\t' ) ; // city
-
-		getline( input, tempString, '\n' ) ; // system
-
-		if ( root == NULL )
-			root = Insert( root, temp ) ;
-
-		else {
-
-			it = root ;
-			root = Insert( it, temp ) ;
-
-		} // else
-
-		number++ ;
-
-	} // while
-
-	input.close() ;
-
-} // AVL_Tree::CreateTree()
-
-/*
- * to print the height of the tree
- */
-
-void Two_Three_Tree::PrintTreeHeight() {
-
-	cout << "Tree height = " << CountTreeHeight( root ) ;
-
-} // Two_Three_Tree::PrintTreeHeight()
-
-/*
- * to print the num of nodes
- */
-
-void Two_Three_Tree::PrintNumOfNodes() {
-
-	cout << "Number of nodes = " << numOfNodes << endl ;
-
-} // Two_Three_Tree::PrintNumOfNodes()
-
-/*
- * to get a pointer point to root
- */
-
-Two_Three_TreeInfoPtr Two_Three_Tree::GetRoot() {
-
-	return root ;
-
-} // Two_Three_Tree::GetRoot()
-
 
 // ===============================    the implement of method in AVL_TreeInfo    =================================
 
